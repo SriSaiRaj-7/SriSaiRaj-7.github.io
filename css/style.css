@@ -511,7 +511,7 @@ body.nav-open .nav-links a {
   width: 100%;
   height: auto;
   /* a second, living sepia pass on top of the baked-in one */
-  filter: sepia(0.25) contrast(1.04) brightness(0.97);
+  filter: sepia(0.18) contrast(1.02);
 }
 
 .portrait-caption {
