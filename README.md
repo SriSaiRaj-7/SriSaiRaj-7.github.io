@@ -33,3 +33,19 @@ python -m http.server 8907
 3. Wait ~1 minute. Done — free HTTPS hosting forever.
 
 No Python, no Node, no build pipeline required for deployment — it's a static site.
+
+## Social preview card
+
+`assets/og-image.jpg` (1200×630) is the image WhatsApp/LinkedIn/X show when the
+link is shared. It was rendered from `og-card.html` with headless Chrome:
+
+```bash
+python -m http.server 8907
+"C:/Program Files/Google/Chrome/Application/chrome.exe" --headless=new \
+  --window-size=1200,630 --virtual-time-budget=8000 \
+  --screenshot=assets/og-image.png http://127.0.0.1:8907/og-card.html
+python -c "from PIL import Image; Image.open('assets/og-image.png').convert('RGB').save('assets/og-image.jpg', 'JPEG', quality=85, optimize=True)"
+```
+
+Scrapers cache previews aggressively; after changing the image, refresh via
+[opengraph.xyz](https://www.opengraph.xyz) or LinkedIn's Post Inspector.
