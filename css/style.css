@@ -506,11 +506,12 @@ body.nav-open .nav-links a {
 
 .portrait-inner { position: relative; }
 
-.portrait-svg {
+.portrait-photo {
   display: block;
   width: 100%;
   height: auto;
-  filter: sepia(0.5) contrast(1.05);
+  /* a second, living sepia pass on top of the baked-in one */
+  filter: sepia(0.25) contrast(1.04) brightness(0.97);
 }
 
 .portrait-caption {
@@ -520,13 +521,6 @@ body.nav-open .nav-links a {
   font-size: 0.6rem;
   letter-spacing: 0.35em;
   color: var(--sepia-dim);
-}
-
-.figure { animation: sway 6s ease-in-out infinite; transform-origin: 150px 300px; }
-
-@keyframes sway {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(0.6deg); }
 }
 
 /* ---- Filmstrips / projects -------------------------------------------------- */
@@ -854,7 +848,7 @@ body.nav-open .nav-links a {
 .delay-2 { transition-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, .flicker, .leader-sweep, .scroll-cue-line, .figure { animation: none; }
+  body::before, .flicker, .leader-sweep, .scroll-cue-line { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
   #film-leader { display: none; }
