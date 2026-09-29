@@ -20,6 +20,7 @@
   --font-body:   "Cormorant Garamond", Georgia, serif;
   --font-script: "IM Fell English", Georgia, serif;
   --font-type:   "Special Elite", "Courier New", monospace;
+  --font-sanskrit: "Tiro Devanagari Sanskrit", "Nirmala UI", serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -306,9 +307,10 @@ body.nav-open .nav-links a {
 }
 
 .gita-sanskrit {
-  font-weight: 700;
-  font-size: clamp(1.25rem, 3.2vw, 1.7rem);
-  line-height: 1.9;
+  font-family: var(--font-sanskrit);
+  font-weight: 400; /* Tiro's regular weight is already calligraphic; heavier looks heavy-handed */
+  font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+  line-height: 2;
   color: var(--sepia-bright);
   text-shadow: 0 0 30px rgba(201, 164, 92, 0.18);
 }
