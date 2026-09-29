@@ -727,6 +727,156 @@ body.nav-open .nav-links a {
   color: var(--sepia-dim);
 }
 
+/* ---- The Features (publications) -------------------------------------------- */
+.marquee {
+  background: var(--paper);
+  border: 1px solid var(--gold-dim);
+  padding: 2.2rem clamp(1.4rem, 4vw, 2.6rem);
+  text-align: center;
+  box-shadow: 0 0 40px rgba(201, 164, 92, 0.08), 0 18px 40px rgba(0,0,0,0.45);
+}
+
+.marquee-lights {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.marquee-lights span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  box-shadow: 0 0 6px rgba(201, 164, 92, 0.35);
+}
+
+.marquee-lights span:nth-child(odd) { animation: bulb 2.4s ease-in-out infinite; }
+.marquee-lights span:nth-child(even) { animation: bulb 2.4s ease-in-out 1.2s infinite; }
+
+@keyframes bulb {
+  0%, 100% { background: var(--gold-dim); box-shadow: 0 0 6px rgba(201, 164, 92, 0.35); }
+  50% { background: var(--gold); box-shadow: 0 0 14px rgba(201, 164, 92, 0.8); }
+}
+
+.marquee-title {
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.marquee-sub {
+  margin-top: 1rem;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--sepia-dim);
+  font-style: italic;
+}
+
+/* when real papers land, these rows appear under the marquee */
+.feature-credits {
+  list-style: none;
+  margin-top: 2rem;
+}
+
+.credit-row {
+  display: flex;
+  gap: 1.2rem;
+  align-items: baseline;
+  padding: 0.9rem 0.2rem;
+  border-bottom: 1px dashed var(--line);
+}
+
+.credit-row:last-child { border-bottom: none; }
+
+.credit-role {
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.credit-name { color: var(--sepia); font-size: 1.08rem; }
+.credit-name em { color: var(--sepia-dim); }
+
+.credit-link {
+  font-family: var(--font-type);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.credit-link:hover { border-bottom-color: var(--gold); }
+
+/* ---- The Serial (blog) ------------------------------------------------------- */
+.serial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.4rem;
+}
+
+.serial-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold-dim);
+  padding: 1.5rem 1.4rem;
+  transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.serial-card:hover {
+  transform: translateY(-4px);
+  border-top-color: var(--gold);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+}
+
+.serial-no {
+  font-family: var(--font-type);
+  font-size: 0.64rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+
+.serial-title {
+  margin-top: 0.7rem;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--sepia-bright);
+  line-height: 1.45;
+}
+
+.serial-desc {
+  margin-top: 0.7rem;
+  font-size: 1rem;
+  color: var(--sepia-dim);
+}
+
+.serial-meta {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-family: var(--font-type);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  color: var(--gold-text);
+  border: 1px dashed var(--gold-dim);
+  padding: 0.3rem 0.7rem;
+}
+
+.serial-note {
+  margin-top: 2rem;
+  text-align: center;
+  font-family: var(--font-script);
+  font-style: italic;
+  color: var(--sepia-dim);
+}
+
 /* ---- Interests ---------------------------------------------------------------- */
 .interests-line {
   text-align: center;
@@ -864,7 +1014,7 @@ body.nav-open .nav-links a {
 .delay-2 { transition-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, .flicker, .leader-sweep, .scroll-cue-line { animation: none; }
+  body::before, .flicker, .leader-sweep, .scroll-cue-line, .marquee-lights span { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
   #film-leader { display: none; }
@@ -887,6 +1037,8 @@ body.nav-open .nav-links a {
   .filmstrip-label, .tech-tags span, .project-meta { font-size: 0.72rem; }
   .contact-label { font-size: 0.68rem; }
   .resume-hint { font-size: 0.68rem; }
+  .serial-no, .serial-meta, .credit-role, .credit-link { font-size: 0.7rem; }
+  .marquee-lights { gap: 1rem; }
   .portrait-caption, .credits-line { font-size: 0.68rem; }
   .credits-line.dim { font-size: 0.64rem; }
   .edu-years { font-size: 0.7rem; }

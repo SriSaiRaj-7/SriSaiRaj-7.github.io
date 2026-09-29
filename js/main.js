@@ -125,24 +125,23 @@
     })();
   }
 
-  if (typeTargets.length && !reduceMotion) {
-    var queue = typeTargets.slice();
-    (function next() {
-      var el = queue.shift();
-      if (!el) return;
-      var text = el.getAttribute("data-typewriter");
+  var typeQueue = typeTargets.map(function (el) {
+    return { el: el, text: el.getAttribute("data-typewriter"), typing: false };
+  });
 
-      (function arm() {
-        var r = el.getBoundingClientRect();
-        var vh = window.innerHeight || document.documentElement.clientHeight;
-        if (r.top < vh - 20 || r.bottom < vh) {
-          typewrite(el, text, next);
-        } else {
-          window.addEventListener("scroll", arm, { passive: true, once: true });
-        }
-      })();
-    })();
-  } else {
+  function pumpTypewriters() {
+    if (!typeQueue.length || reduceMotion) return;
+    var item = typeQueue[0];
+    if (item.typing) return;
+    var r = item.el.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    if (r.top < vh - 20 || r.bottom < vh) {
+      item.typing = true;
+      typewrite(item.el, item.text, function () { typeQueue.shift(); });
+    }
+  }
+
+  if (!typeTargets.length || reduceMotion) {
     typeTargets.forEach(function (el) { el.textContent = el.getAttribute("data-typewriter") || el.textContent; });
   }
 
@@ -158,4 +157,15 @@
       }
     }, { passive: true });
   }
+
+  /* ---- 300ms ticker: belt-and-braces for embedded webviews that drop
+         scroll events (kiosk browsers, preview panes). Cheap by design:
+         self-terminates once every reveal and typewriter has run. ------- */
+  var ticker = setInterval(function () {
+    onScroll();
+    sweepReveals();
+    pumpTypewriters();
+    var allRevealed = revealEls.every(function (el) { return el.classList.contains("visible"); });
+    if (allRevealed && typeQueue.length === 0) clearInterval(ticker);
+  }, 300);
 })();
