@@ -8,10 +8,11 @@
   --ink-2:        #14100a;
   --ink-3:        #1b150c;
   --sepia:        #c8b48c;
-  --sepia-dim:    #a08e6d;
+  --sepia-dim:    #b3a184;
   --sepia-bright: #e9d9b4;
   --gold:         #c9a45c;
   --gold-dim:     #8a6f3c;
+  --gold-text:    #c2a26b;
   --line:         rgba(201, 164, 92, 0.22);
   --paper:        #171209;
 
@@ -223,8 +224,10 @@ body::after {
   background: none;
   border: 1px solid var(--line);
   color: var(--gold);
-  font-size: 1.1rem;
-  padding: 0.2rem 0.6rem;
+  font-size: 1.25rem;
+  min-width: 44px;
+  min-height: 44px;
+  line-height: 1;
   cursor: pointer;
 }
 
@@ -246,7 +249,11 @@ body.nav-open .nav-links {
   background: var(--paper);
   border: 1px solid var(--line);
   padding: 1.4rem 2rem;
-  gap: 1rem;
+  gap: 0.2rem;
+}
+
+body.nav-open .nav-links a {
+  padding: 0.85rem 0; /* 44px+ tap targets */
 }
 
 /* ---- Hero ---------------------------------------------------------------- */
@@ -478,12 +485,13 @@ body.nav-open .nav-links {
   color: var(--gold);
   text-decoration: none;
   border-bottom: 1px solid transparent;
+  padding: 0.35rem 0; /* comfortable tap target on phones */
   transition: border-color 250ms ease, color 250ms ease;
 }
 
 .about-links a:hover { border-bottom-color: var(--gold); color: var(--sepia-bright); }
 
-.dot-sep { color: var(--gold-dim); }
+.dot-sep { color: var(--gold-text); }
 
 /* ---- Portrait -------------------------------------------------------------- */
 .portrait-frame {
@@ -593,7 +601,7 @@ body.nav-open .nav-links {
   content: "—";
   position: absolute;
   left: 0;
-  color: var(--gold-dim);
+  color: var(--gold-text);
 }
 
 .tech-tags {
@@ -630,7 +638,7 @@ body.nav-open .nav-links {
   font-family: var(--font-type);
   font-size: 0.65rem;
   letter-spacing: 0.25em;
-  color: var(--gold-dim);
+  color: var(--gold-text);
 }
 
 /* ---- Craft (skills) ---------------------------------------------------------- */
@@ -815,7 +823,7 @@ body.nav-open .nav-links {
   color: var(--sepia-dim);
 }
 
-.credits-line.dim { margin-top: 0.6rem; color: rgba(160, 142, 109, 0.6); font-size: 0.6rem; }
+.credits-line.dim { margin-top: 0.6rem; color: rgba(160, 142, 109, 0.85); font-size: 0.68rem; }
 
 /* ---- Footer ------------------------------------------------------------------------ */
 .site-footer {
@@ -825,10 +833,10 @@ body.nav-open .nav-links {
   font-family: var(--font-type);
   font-size: 0.64rem;
   letter-spacing: 0.15em;
-  color: rgba(160, 142, 109, 0.7);
+  color: rgba(160, 142, 109, 0.85);
 }
 
-.footer-whisper { display: block; margin-top: 0.5rem; font-style: italic; color: rgba(160, 142, 109, 0.5); }
+.footer-whisper { display: block; margin-top: 0.5rem; font-style: italic; color: rgba(160, 142, 109, 0.85); }
 
 /* ---- Reveal-on-scroll ---------------------------------------------------------------- */
 .reveal {
@@ -864,4 +872,12 @@ body.nav-open .nav-links {
   body { font-size: 1.08rem; }
   .act-marker { flex-wrap: wrap; }
   .act-name { letter-spacing: 0.3em; }
+  /* small print gets a bump so it stays legible on phones */
+  .act-no { font-size: 0.72rem; }
+  .filmstrip-label, .tech-tags span, .project-meta { font-size: 0.72rem; }
+  .contact-label { font-size: 0.68rem; }
+  .portrait-caption, .credits-line { font-size: 0.68rem; }
+  .credits-line.dim { font-size: 0.64rem; }
+  .edu-years { font-size: 0.7rem; }
+  .about-note { font-size: 0.8rem !important; }
 }
