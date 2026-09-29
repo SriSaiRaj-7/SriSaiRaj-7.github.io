@@ -301,6 +301,8 @@ body.nav-open .nav-links a {
   color: var(--gold);
 }
 
+.hero-focus-sep { color: var(--gold-dim); margin: 0 0.35rem; font-style: normal; }
+
 .hero-quote {
   margin: 2.6rem auto 0;
   max-width: 40rem;
@@ -372,32 +374,7 @@ body.nav-open .nav-links a {
   background: rgba(201, 164, 92, 0.06);
 }
 
-.scroll-cue {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-type);
-  font-size: 0.6rem;
-  letter-spacing: 0.4em;
-  color: var(--sepia-dim);
-}
-
-.scroll-cue-line {
-  width: 1px;
-  height: 3rem;
-  background: linear-gradient(to bottom, var(--gold-dim), transparent);
-  animation: cue 2.2s ease-in-out infinite;
-}
-
-@keyframes cue {
-  0%, 100% { transform: scaleY(0.4); transform-origin: top; opacity: 0.4; }
-  50% { transform: scaleY(1); opacity: 1; }
-}
+/* scroll-cue removed by request */
 
 /* ---- Sections ------------------------------------------------------------ */
 .section {
@@ -1032,7 +1009,7 @@ body.nav-open .nav-links a {
 .delay-2 { transition-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, .flicker, .leader-sweep, .scroll-cue-line, .marquee-lights span { animation: none; }
+  body::before, .flicker, .leader-sweep, .marquee-lights span { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
   #film-leader { display: none; }
