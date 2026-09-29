@@ -805,6 +805,22 @@ body.nav-open .nav-links a {
   color: var(--sepia-dim);
 }
 
+.resume-cta {
+  margin-top: 2.2rem;
+  text-align: center;
+}
+
+.btn-resume { display: inline-block; }
+
+.resume-hint {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: var(--font-type);
+  font-size: 0.64rem;
+  letter-spacing: 0.25em;
+  color: var(--sepia-dim);
+}
+
 .credits {
   margin-top: 3.5rem;
   text-align: center;
@@ -870,6 +886,7 @@ body.nav-open .nav-links a {
   .act-no { font-size: 0.72rem; }
   .filmstrip-label, .tech-tags span, .project-meta { font-size: 0.72rem; }
   .contact-label { font-size: 0.68rem; }
+  .resume-hint { font-size: 0.68rem; }
   .portrait-caption, .credits-line { font-size: 0.68rem; }
   .credits-line.dim { font-size: 0.64rem; }
   .edu-years { font-size: 0.7rem; }
