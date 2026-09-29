@@ -302,19 +302,35 @@ body.nav-open .nav-links a {
 
 .hero-quote {
   margin: 2.6rem auto 0;
-  max-width: 34rem;
+  max-width: 40rem;
+}
+
+.gita-sanskrit {
+  font-weight: 700;
+  font-size: clamp(1.25rem, 3.2vw, 1.7rem);
+  line-height: 1.9;
+  color: var(--sepia-bright);
+  text-shadow: 0 0 30px rgba(201, 164, 92, 0.18);
+}
+
+.gita-translation {
+  margin-top: 1.1rem;
   font-family: var(--font-script);
   font-style: italic;
-  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
-  line-height: 1.6;
-  color: var(--sepia);
+  font-size: clamp(1.02rem, 2.4vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--sepia-dim);
+}
+
+.gita-cite {
+  margin-top: 0.8rem;
+  font-family: var(--font-type);
+  font-size: 0.66rem;
+  letter-spacing: 0.35em;
+  color: var(--gold-text);
 }
 
 .quote-mark { color: var(--gold); font-size: 1.3em; }
-
-.hero-quote-line { display: block; }
-
-.hero-quote .hero-quote-line:nth-child(3) { color: var(--sepia-bright); }
 
 .hero-cta {
   margin-top: 2.8rem;
