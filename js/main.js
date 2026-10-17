@@ -46,6 +46,7 @@
   var nav = document.getElementById("site-nav");
   var toggle = document.getElementById("nav-toggle");
   var veil = document.getElementById("nav-veil");
+  var progress = document.getElementById("nav-progress");
   var navLinks = Array.prototype.slice.call(document.querySelectorAll("#site-nav [data-nav]"));
   var sections = navLinks
     .map(function (a) { return document.querySelector(a.getAttribute("href")); })
@@ -63,6 +64,11 @@
     navLinks.forEach(function (a) {
       a.classList.toggle("active", current !== null && a.getAttribute("href") === "#" + current);
     });
+
+    if (progress) {
+      var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+      progress.style.width = Math.min(100, Math.max(0, (window.scrollY / max) * 100)) + "%";
+    }
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -156,6 +162,40 @@
         heroInner.style.opacity = String(Math.max(0, 1 - y / (window.innerHeight * 0.9)));
       }
     }, { passive: true });
+
+    /* pointer parallax: stars drift with the cursor, the monolith leans
+       the other way — the pod-window effect. Fine pointers only. */
+    if (window.matchMedia("(pointer: fine)").matches) {
+      var px = 0, py = 0, parallaxRaf = 0;
+      var applyParallax = function () {
+        parallaxRaf = 0;
+        hero.style.setProperty("--mx", px.toFixed(1) + "px");
+        hero.style.setProperty("--my", py.toFixed(1) + "px");
+      };
+      hero.addEventListener("mousemove", function (e) {
+        var r = hero.getBoundingClientRect();
+        px = ((e.clientX - r.left) / r.width - 0.5) * 24;
+        py = ((e.clientY - r.top) / r.height - 0.5) * 16;
+        if (!parallaxRaf) parallaxRaf = requestAnimationFrame(applyParallax);
+      });
+      hero.addEventListener("mouseleave", function () {
+        px = 0; py = 0;
+        if (!parallaxRaf) parallaxRaf = requestAnimationFrame(applyParallax);
+      });
+    }
+  }
+
+  /* ---- Mission elapsed time: counts the visitor's time aboard ------------ */
+  var metEl = document.getElementById("met-clock");
+  if (metEl) {
+    var metStart = Date.now();
+    var metPad = function (n) { return n < 10 ? "0" + n : String(n); };
+    var metTick = function () {
+      var s = Math.floor((Date.now() - metStart) / 1000);
+      metEl.textContent = metPad(Math.floor(s / 3600)) + ":" + metPad(Math.floor(s / 60) % 60) + ":" + metPad(s % 60);
+    };
+    metTick();
+    setInterval(metTick, 1000);
   }
 
   /* ---- 300ms ticker: belt-and-braces for embedded webviews that drop
