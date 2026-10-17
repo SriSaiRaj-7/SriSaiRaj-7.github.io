@@ -1,6 +1,6 @@
 /* ==========================================================================
-   SRI SAI RAJ — A PICTURE IN FOUR ACTS
-   Film-leader intro, typewriter, scroll reveals, nav behavior
+   SRI SAI RAJ — 2001: A SPACE ODYSSEY
+   Pre-launch countdown, typewriter, scroll reveals, nav behavior
    ========================================================================== */
 
 (function () {
@@ -109,7 +109,7 @@
 
   function typewrite(el, text, done) {
     el.textContent = "";
-    el.style.borderRight = "2px solid var(--gold)";
+    el.style.borderRight = "2px solid var(--hal)";
     el.style.paddingRight = "2px";
     var pos = 0;
     var speed = 34;

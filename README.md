@@ -1,7 +1,8 @@
 # Sri Sai Raj — Portfolio
 
-A cinematic, Godfather-era portfolio site: sepia film stock, gold title cards,
-grain and vignette, typewriter accents. Built from a real researcher's resume.
+A *2001: A Space Odyssey*-inspired portfolio site: bright ship-interior
+whites, deep-space starfields, the monolith, HAL red and display cyan, and
+telemetry-style mono labels. Built from a real researcher's resume.
 
 **Live site (after enabling GitHub Pages):** https://srisairaj-7.github.io
 
@@ -12,8 +13,8 @@ Three files do all the work:
 
 ```
 index.html      all content and structure
-css/style.css   the film-stock aesthetic
-js/main.js      intro countdown, typewriter, scroll reveals, nav
+css/style.css   the 2001 look: stars, HAL red, ship white
+js/main.js      pre-launch countdown, typewriter, scroll reveals, nav
 ```
 
 ## Local preview
