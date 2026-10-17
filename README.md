@@ -1,7 +1,7 @@
 # Sri Sai Raj — Portfolio
 
-A *2001: A Space Odyssey*-inspired portfolio site: bright ship-interior
-whites, deep-space starfields, the monolith, HAL red and display cyan, and
+A *2001: A Space Odyssey*-inspired portfolio site: warm pod-interior apricot,
+deep-space starfields, the monolith, HAL red and display cyan, and
 telemetry-style mono labels. Built from a real researcher's resume.
 
 **Live site (after enabling GitHub Pages):** https://srisairaj-7.github.io
@@ -13,7 +13,7 @@ Three files do all the work:
 
 ```
 index.html      all content and structure
-css/style.css   the 2001 look: stars, HAL red, ship white
+css/style.css   the 2001 look: stars, HAL red, pod apricot
 js/main.js      pre-launch countdown, typewriter, scroll reveals, nav
 ```
 

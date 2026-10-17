@@ -12,16 +12,16 @@
   --space-3:      #101b30;
 
   /* ---- ship interior (bright blocks) ---- */
-  --bg:           #f5f7fb;
-  --bg-alt:       #eaeff7;
-  --panel:        #ffffff;
+  --bg:           #fbe9d9;
+  --bg-alt:       #f6dcc4;
+  --panel:        #fffaf4;
 
   /* ---- accents ---- */
   --hal:          #d92d26;   /* HAL red — fills, glows */
   --hal-deep:     #bf2620;   /* HAL red — text on light */
   --hal-glow:     rgba(217, 45, 38, 0.45);
   --cyan:         #16a9e8;   /* display cyan — fills, glows */
-  --cyan-deep:    #0b6f9e;   /* display cyan — text on light */
+  --cyan-deep:    #0a668f;   /* display cyan — text on light */
   --cyan-glow:    rgba(78, 201, 245, 0.4);
 
   /* ---- starfield (tiled dot layers, used by the dark blocks) ---- */
@@ -46,14 +46,14 @@ html { scroll-behavior: smooth; }
 
 body {
   /* light-context defaults — dark blocks redeclare these */
-  --fg:        #26303f;
-  --fg-strong: #0e1522;
-  --fg-dim:    #5d6879;
+  --fg:        #2b2018;
+  --fg-strong: #1a1109;
+  --fg-dim:    #6d5a47;
   --accent:    var(--hal-deep);
   --tech:      var(--cyan-deep);
   --surface:   var(--panel);
-  --line:      rgba(14, 21, 34, 0.16);
-  --line-soft: rgba(14, 21, 34, 0.08);
+  --line:      rgba(74, 36, 12, 0.18);
+  --line-soft: rgba(74, 36, 12, 0.09);
 
   background: var(--bg);
   color: var(--fg);
@@ -234,13 +234,13 @@ body::before {
 }
 
 #site-nav.scrolled {
-  --nav-fg: #47536b;
-  --nav-rule: rgba(14, 21, 34, 0.3);
+  --nav-fg: #554434;
+  --nav-rule: rgba(74, 36, 12, 0.32);
   --nav-accent: var(--hal-deep);
-  background: rgba(255, 255, 255, 0.93);
+  background: rgba(253, 243, 232, 0.93);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom-color: rgba(14, 21, 34, 0.1);
+  border-bottom-color: rgba(74, 36, 12, 0.12);
 }
 
 .nav-brand {
@@ -306,8 +306,8 @@ body.nav-open #site-nav .nav-links {
   top: 4rem; right: 1.2rem;
   z-index: 3001;
   background: var(--panel);
-  border: 1px solid rgba(14, 21, 34, 0.14);
-  box-shadow: 0 24px 60px rgba(9, 15, 30, 0.25);
+  border: 1px solid rgba(74, 36, 12, 0.16);
+  box-shadow: 0 24px 60px rgba(58, 28, 10, 0.25);
   padding: 1.4rem 2rem;
   gap: 0.2rem;
 }
@@ -389,36 +389,6 @@ body.nav-open .nav-links a {
 
 .hero-focus-sep { color: #ff5f52; margin: 0 0.35rem; }
 
-.hero-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 2.1rem;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.03);
-  font-family: var(--font-mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.hero-status::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--hal);
-  box-shadow: 0 0 12px var(--hal-glow);
-  animation: pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
 .hero-cta {
   margin-top: 2.6rem;
   display: flex;
@@ -470,7 +440,7 @@ body.nav-open .nav-links a {
 .section-alt {
   background-color: var(--bg-alt);
   /* faint mission-plan grid */
-  background-image: radial-gradient(rgba(14, 21, 34, 0.07) 1px, transparent 1.2px);
+  background-image: radial-gradient(rgba(74, 36, 12, 0.08) 1px, transparent 1.2px);
   background-size: 30px 30px;
 }
 
@@ -587,8 +557,8 @@ body.nav-open .nav-links a {
   border: 1px solid var(--line);
   padding: 0.7rem;
   box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.05),
-    0 18px 40px rgba(15, 23, 42, 0.12);
+    0 1px 2px rgba(92, 47, 16, 0.06),
+    0 18px 40px rgba(92, 47, 16, 0.13);
   transform: rotate(1.2deg);
 }
 
@@ -744,14 +714,14 @@ body.nav-open .nav-links a {
   border: 1px solid var(--line);
   border-top: 2px solid rgba(22, 169, 232, 0.55);
   padding: 1.6rem 1.5rem;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 28px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 1px 2px rgba(92, 47, 16, 0.06), 0 12px 28px rgba(92, 47, 16, 0.08);
   transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .craft:hover {
   transform: translateY(-4px);
   border-top-color: var(--hal);
-  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 22px 48px rgba(15, 23, 42, 0.14);
+  box-shadow: 0 2px 4px rgba(92, 47, 16, 0.07), 0 22px 48px rgba(92, 47, 16, 0.15);
 }
 
 .craft-title {
@@ -788,7 +758,7 @@ body.nav-open .nav-links a {
   border: 1px solid var(--line);
   padding: 1.8rem 1.7rem;
   position: relative;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 28px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 1px 2px rgba(92, 47, 16, 0.06), 0 12px 28px rgba(92, 47, 16, 0.08);
 }
 
 .edu::before {
@@ -837,7 +807,7 @@ body.nav-open .nav-links a {
   border: 1px solid rgba(217, 45, 38, 0.5);
   padding: 2.2rem clamp(1.4rem, 4vw, 2.6rem);
   text-align: center;
-  box-shadow: 0 0 40px rgba(217, 45, 38, 0.08), 0 18px 40px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 0 40px rgba(217, 45, 38, 0.08), 0 18px 40px rgba(92, 47, 16, 0.09);
 }
 
 .marquee-lights {
@@ -932,14 +902,14 @@ body.nav-open .nav-links a {
   border: 1px solid var(--line);
   border-top: 3px solid rgba(22, 169, 232, 0.55);
   padding: 1.5rem 1.4rem;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 28px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 1px 2px rgba(92, 47, 16, 0.06), 0 12px 28px rgba(92, 47, 16, 0.08);
   transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .serial-card:hover {
   transform: translateY(-4px);
   border-top-color: var(--hal);
-  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 22px 48px rgba(15, 23, 42, 0.14);
+  box-shadow: 0 2px 4px rgba(92, 47, 16, 0.07), 0 22px 48px rgba(92, 47, 16, 0.15);
 }
 
 .serial-no {
@@ -1173,7 +1143,7 @@ body.nav-open .nav-links a {
 .delay-2 { transition-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, .flicker, .leader-sweep, .marquee-lights span, .hero-status::before { animation: none; }
+  body::before, .flicker, .leader-sweep, .marquee-lights span { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .gita-sanskrit, .gita-translation, .gita-cite, .quote-mark { transition: none; }
   html { scroll-behavior: auto; }
@@ -1206,6 +1176,5 @@ body.nav-open .nav-links a {
   .credits-line.dim { font-size: 0.64rem; }
   .edu-years { font-size: 0.7rem; }
   .about-note { font-size: 0.78rem !important; }
-  .hero-status { font-size: 0.6rem; letter-spacing: 0.22em; padding: 0.55rem 0.9rem; }
   .gita-quiet { padding: 2.2rem 1.2rem; }
 }
