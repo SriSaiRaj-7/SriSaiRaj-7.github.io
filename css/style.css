@@ -11,14 +11,14 @@
   --space-2:      #130906;
   --space-3:      #1d0f08;
 
-  /* ---- poster ground (bright blocks) ---- */
-  --bg:           #f7cda6;
-  --bg-alt:       #f0b885;
+  /* ---- poster ground (bright blocks) — the film poster's orange ---- */
+  --bg:           #f68a3f;
+  --bg-alt:       #f79550;
   --panel:        #fff3e0;
 
   /* ---- accents ---- */
   --hal:          #d6340c;   /* poster vermilion — fills, glows */
-  --hal-deep:     #a52808;   /* vermilion — text on light */
+  --hal-deep:     #741803;   /* deep brick — accent text on the orange body */
   --hal-glow:     rgba(214, 52, 12, 0.45);
   --ember:        #ff7a33;   /* pod ember — fills, glows */
   --ember-deep:   #3a1c0a;   /* warm ink — mono labels on light */
@@ -48,7 +48,7 @@ body {
   /* light-context defaults — dark blocks redeclare these */
   --fg:        #291206;
   --fg-strong: #180a02;
-  --fg-dim:    #5c3a1e;
+  --fg-dim:    #4d2f17;
   --accent:    var(--hal-deep);
   --tech:      var(--ember-deep);
   --surface:   var(--panel);
