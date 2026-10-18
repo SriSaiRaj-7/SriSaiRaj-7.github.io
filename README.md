@@ -3,8 +3,9 @@
 A *2001: A Space Odyssey*-inspired portfolio site built on the film's
 poster palette: vermilion red-orange over orange-sand sections, warm-black
 starfields, the monolith, cream cards and telemetry-style mono labels —
-plus a live mission clock, a scrolling telemetry ticker and a scroll
-progress bar. Built from a real researcher's resume.
+plus a pod-bay-door boot screen, a live mission clock, a scrolling
+telemetry ticker and a scroll progress bar. Built from a real
+researcher's resume.
 
 **Live site (after enabling GitHub Pages):** https://srisairaj-7.github.io
 
@@ -16,7 +17,7 @@ Three files do all the work:
 ```
 index.html      all content and structure
 css/style.css   the 2001 look: poster red, warm black, sand
-js/main.js      countdown, mission clock, parallax, reveals, nav
+js/main.js      boot screen, mission clock, parallax, reveals, nav
 ```
 
 ## Local preview

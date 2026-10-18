@@ -29,18 +29,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=6" />
+  <link rel="stylesheet" href="css/style.css?v=8" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23060a12'/%3E%3Ccircle cx='16' cy='16' r='11.5' fill='none' stroke='%234ec9f5' stroke-opacity='0.55'/%3E%3Ctext x='16' y='22.5' font-family='Futura,Century Gothic,sans-serif' font-weight='600' font-size='17' fill='%23e5322d' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
 
-  <!-- ============ FILM COUNTDOWN LEADER ============ -->
-  <div id="film-leader" aria-hidden="true">
-    <div class="leader-frame">
-      <div class="leader-crosshair"></div>
-      <div class="leader-sweep"></div>
-      <div class="leader-num">3</div>
-      <div class="leader-caption">ALL&nbsp;SYSTEMS&nbsp;NOMINAL</div>
+  <!-- ============ BOOT : POD BAY DOORS ============ -->
+  <div id="boot-screen" aria-hidden="true">
+    <div class="boot-panel boot-left"></div>
+    <div class="boot-panel boot-right"></div>
+    <div class="boot-seam"></div>
+    <div class="boot-core">
+      <div class="boot-monolith"></div>
+      <div class="boot-bar"><span></span></div>
+      <p class="boot-caption">PRE-LAUNCH&nbsp;CHECK&nbsp;·&nbsp;ALL&nbsp;SYSTEMS&nbsp;NOMINAL</p>
     </div>
   </div>
 
@@ -114,7 +116,7 @@
         </div>
         <figure class="portrait-frame reveal delay-1">
           <div class="portrait-inner">
-            <img src="assets/portrait.jpg" alt="Black-and-white portrait of Sri Sai Raj" class="portrait-photo" width="600" height="750" loading="lazy" />
+            <img src="assets/portrait.jpg" alt="Portrait of Sri Sai Raj" class="portrait-photo" width="600" height="750" loading="lazy" />
             <div class="portrait-caption">FIG. 1 — THE RESEARCHER, IN THE FLESH</div>
           </div>
         </figure>
@@ -348,11 +350,15 @@
           <span class="contact-label">TRANSMIT&nbsp;TO</span>
           <span class="contact-value">ersrisairaj@gmail.com</span>
         </a>
-        <a class="contact-card reveal delay-1" href="https://github.com/SriSaiRaj-7" target="_blank" rel="noopener">
+        <a class="contact-card reveal delay-1" href="mailto:25f3005181@ds.study.iitm.ac.in">
+          <span class="contact-label">MISSION&nbsp;CONTROL</span>
+          <span class="contact-value">25f3005181@ds.study.iitm.ac.in</span>
+        </a>
+        <a class="contact-card reveal delay-2" href="https://github.com/SriSaiRaj-7" target="_blank" rel="noopener">
           <span class="contact-label">THE&nbsp;ARCHIVE</span>
           <span class="contact-value">github.com/SriSaiRaj-7</span>
         </a>
-        <a class="contact-card reveal delay-2" href="https://linkedin.com/in/sri-sai-raj0503" target="_blank" rel="noopener">
+        <a class="contact-card reveal delay-3" href="https://linkedin.com/in/sri-sai-raj0503" target="_blank" rel="noopener">
           <span class="contact-label">FLIGHT&nbsp;CREW</span>
           <span class="contact-value">linkedin.com/in/sri-sai-raj0503</span>
         </a>
@@ -381,6 +387,6 @@
     <p>© 2026 Sri Sai Raj — All rights reserved. <span class="footer-whisper">I’m sorry, Dave — I’m afraid I can’t stop debugging.</span></p>
   </footer>
 
-  <script src="js/main.js?v=12"></script>
+  <script src="js/main.js?v=13"></script>
 </body>
 </html>

@@ -71,7 +71,7 @@ body {
 .gita-quiet,
 .site-footer,
 .filmstrip,
-#film-leader {
+#boot-screen {
   --fg:        rgba(255, 255, 255, 0.86);
   --fg-strong: #ffffff;
   --fg-dim:    rgba(255, 255, 255, 0.6);
@@ -137,80 +137,129 @@ body::before {
   75% { opacity: 0; }
 }
 
-/* ---- Pre-launch systems check (countdown leader) ------------------------- */
-#film-leader {
+/* ---- Boot : pod bay doors (pre-launch check) ------------------------------ */
+#boot-screen {
   position: fixed;
   inset: 0;
   z-index: 5000;
-  background: #0c0503;
+  overflow: hidden;
+  /* failsafe: hide even if the JS never runs */
+  animation: boot-gone 1ms linear 2.7s forwards;
+}
+
+@keyframes boot-gone { to { visibility: hidden; } }
+
+/* the two doors: starfield panels that part like pod bay doors */
+.boot-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(50% + 2px);
+  background-color: var(--space);
+  background-image: var(--stars);
+  background-size: var(--star-size);
+}
+
+.boot-left  { left: 0;  animation: door-left  900ms cubic-bezier(0.76, 0, 0.24, 1) 1.75s forwards; }
+.boot-right { right: 0; animation: door-right 900ms cubic-bezier(0.76, 0, 0.24, 1) 1.75s forwards; }
+
+@keyframes door-left  { to { transform: translateX(-101%); } }
+@keyframes door-right { to { transform: translateX(101%); } }
+
+/* light spilling through the closing seam as the doors part */
+.boot-seam {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  z-index: 2;
+  opacity: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 122, 51, 0.9) 16%, #fff6ee 50%, rgba(255, 122, 51, 0.9) 84%, transparent 100%);
+  box-shadow: 0 0 26px rgba(255, 122, 51, 0.75), 0 0 70px rgba(214, 52, 12, 0.45);
+  animation: seam-flash 950ms ease 1.72s forwards;
+}
+
+@keyframes seam-flash {
+  0%   { opacity: 0; transform: scaleY(0.15); }
+  22%  { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(1); }
+}
+
+/* the monolith under inspection, with its systems bar */
+.boot-core {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: leader-out 600ms ease 2.4s forwards;
+  gap: 1.7rem;
+  animation: core-out 340ms ease 1.5s forwards;
 }
 
-@keyframes leader-out {
-  to { opacity: 0; visibility: hidden; }
+@keyframes core-out {
+  to { opacity: 0; transform: translateY(-8px); }
 }
 
-.leader-frame {
+.boot-monolith {
   position: relative;
-  width: min(64vmin, 520px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 122, 51, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: clamp(30px, 6vmin, 44px);
+  aspect-ratio: 1 / 4; /* 1 : 4 : 9 */
+  background: linear-gradient(158deg, #17100c 0%, #020101 44%, #0b0605 100%);
   box-shadow:
-    0 0 120px rgba(255, 122, 51, 0.10) inset,
-    0 0 60px rgba(255, 122, 51, 0.10);
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.34),
+    inset -1.5px 0 0 rgba(255, 255, 255, 0.07),
+    0 0 70px rgba(255, 122, 51, 0.22),
+    0 0 20px rgba(0, 0, 0, 0.85);
   overflow: hidden;
 }
 
-.leader-num {
-  font-family: var(--font-title);
-  font-weight: 500;
-  font-size: clamp(6rem, 18vmin, 13rem);
-  color: #ffffff;
-  text-shadow: 0 0 40px rgba(242, 84, 15, 0.6);
-}
-
-.leader-sweep {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(from -90deg, rgba(255,122,51,0.3) 0deg, transparent 0.1deg);
-  animation: sweep 800ms linear 3;
-  transform-origin: center;
-}
-
-@keyframes sweep { to { transform: rotate(360deg); } }
-
-.leader-crosshair,
-.leader-crosshair::before {
-  position: absolute;
-  background: rgba(255, 122, 51, 0.4);
-}
-.leader-crosshair {
-  left: 50%; top: 0; bottom: 0; width: 1px;
-}
-.leader-crosshair::before {
+/* a scan light sweeping down its face */
+.boot-monolith::after {
   content: "";
-  left: 0; top: 50%; right: auto; bottom: auto;
-  width: 100%; height: 1px;
-  transform: translateY(-0.5px);
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36%;
+  background: linear-gradient(180deg, transparent, rgba(255, 154, 77, 0.55), transparent);
+  animation: boot-scan 1.1s ease-in-out infinite;
 }
 
-.leader-caption {
-  position: absolute;
-  bottom: -3.2rem;
-  left: 50%;
-  transform: translateX(-50%);
+@keyframes boot-scan {
+  0%   { top: -36%; }
+  100% { top: 100%; }
+}
+
+.boot-bar {
+  width: clamp(150px, 34vw, 240px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.boot-bar span {
+  display: block;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--ember), #ffd9b8);
+  box-shadow: 0 0 10px rgba(255, 122, 51, 0.8);
+  animation: boot-fill 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes boot-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.boot-caption {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.5em;
-  color: #ffa14d;
+  font-size: 0.62rem;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em; /* optical centering against the tracking */
+  text-transform: uppercase;
+  color: var(--tech);
   white-space: nowrap;
 }
 
@@ -644,8 +693,7 @@ body.nav-open .nav-links a {
   display: block;
   width: 100%;
   height: auto;
-  /* monochrome plate — cool and clinical, like a mission dossier */
-  filter: grayscale(1) contrast(1.05) brightness(1.02);
+  /* full colour — the original photo, untouched */
 }
 
 .portrait-caption {
@@ -1217,13 +1265,14 @@ body.nav-open .nav-links a {
 
 .delay-1 { transition-delay: 150ms; }
 .delay-2 { transition-delay: 300ms; }
+.delay-3 { transition-delay: 450ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, .flicker, .leader-sweep, .marquee-lights span, .ticker-track, .hero-met::before { animation: none; }
+  body::before, .flicker, .marquee-lights span, .ticker-track, .hero-met::before { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .gita-sanskrit, .gita-translation, .gita-cite, .quote-mark { transition: none; }
   html { scroll-behavior: auto; }
-  #film-leader { display: none; }
+  #boot-screen { display: none; }
 }
 
 /* ---- Responsive ------------------------------------------------------------------------- */

@@ -1,6 +1,6 @@
 /* ==========================================================================
    SRI SAI RAJ — 2001: A SPACE ODYSSEY
-   Pre-launch countdown, typewriter, scroll reveals, nav behavior
+   Boot screen (pod bay doors), typewriter, scroll reveals, nav behavior
    ========================================================================== */
 
 (function () {
@@ -8,31 +8,14 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- Film countdown leader ------------------------------------------ */
-  var leader = document.getElementById("film-leader");
-  if (leader && !reduceMotion) {
-    var num = leader.querySelector(".leader-num");
-    var counts = ["3", "2"];
-    var i = 0;
-    var tick = setInterval(function () {
-      i += 1;
-      if (i < counts.length) {
-        num.textContent = counts[i];
-        restartSweep(leader);
-      } else {
-        clearInterval(tick);
-      }
-    }, 800);
-    setTimeout(function () { leader.remove(); }, 3100);
-  } else if (leader) {
-    leader.remove();
-  }
-
-  function restartSweep(scope) {
-    var sweep = scope.querySelector(".leader-sweep");
-    if (!sweep) return;
-    var clone = sweep.cloneNode(true);
-    sweep.parentNode.replaceChild(clone, sweep);
+  /* ---- Boot screen: the pod bay doors part at ~2.65s ------------------- */
+  var boot = document.getElementById("boot-screen");
+  if (boot) {
+    if (reduceMotion) {
+      boot.remove();
+    } else {
+      setTimeout(function () { boot.remove(); }, 2700);
+    }
   }
 
   /* ---- Flicker overlay -------------------------------------------------- */
