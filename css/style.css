@@ -260,7 +260,9 @@ body::before {
   text-indent: 0.4em; /* optical centering against the tracking */
   text-transform: uppercase;
   color: var(--tech);
-  white-space: nowrap;
+  /* wraps on narrow phones instead of clipping */
+  max-width: calc(100vw - 2rem);
+  margin-inline: auto;
 }
 
 /* ---- Navigation ---------------------------------------------------------- */
@@ -847,7 +849,7 @@ body.nav-open .nav-links a {
 /* ---- Craft (skills) ------------------------------------------------------------- */
 .craft-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
   gap: 1.4rem;
 }
 
@@ -891,7 +893,7 @@ body.nav-open .nav-links a {
 /* ---- Education -------------------------------------------------------------------- */
 .edu-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
   gap: 1.6rem;
 }
 
@@ -1035,7 +1037,7 @@ body.nav-open .nav-links a {
 /* ---- The Serial (blog) ----------------------------------------------------------- */
 .serial-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
   gap: 1.4rem;
 }
 
@@ -1141,7 +1143,7 @@ body.nav-open .nav-links a {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
   gap: 1.2rem;
 }
 
