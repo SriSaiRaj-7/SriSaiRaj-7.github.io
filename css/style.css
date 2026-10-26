@@ -1,8 +1,10 @@
 /* ==========================================================================
    SRI SAI RAJ — 2001: A SPACE ODYSSEY
-   Poster palette: vermilion red-orange and warm black over orange-sand
-   sections, cream cards, ember telemetry. Futura-style display type
-   (Jost) and teletype mono labels (IBM Plex Mono).
+   Discovery-One console palette: warm-black grounds with poster-orange
+   accents, one bright orange feature band, HUD panels with ember
+   telemetry. Futura-style display type (Jost) and teletype mono labels
+   (IBM Plex Mono). Layout: fixed side-rail phase nav above 1080px,
+   top bar below.
    ========================================================================== */
 
 :root {
@@ -11,10 +13,8 @@
   --space-2:      #130906;
   --space-3:      #1d0f08;
 
-  /* ---- poster ground (bright blocks) — the film poster's orange ---- */
+  /* ---- poster orange — the one bright band + nav accents ---- */
   --bg:           #f68a3f;
-  --bg-alt:       #f79550;
-  --panel:        #fff3e0;
 
   /* ---- accents ---- */
   --hal:          #d6340c;   /* poster vermilion — fills, glows */
@@ -45,17 +45,17 @@
 html { scroll-behavior: smooth; }
 
 body {
-  /* light-context defaults — dark blocks redeclare these */
-  --fg:        #291206;
-  --fg-strong: #180a02;
-  --fg-dim:    #4d2f17;
-  --accent:    var(--hal-deep);
-  --tech:      var(--ember-deep);
-  --surface:   var(--panel);
-  --line:      rgba(58, 24, 6, 0.2);
-  --line-soft: rgba(58, 24, 6, 0.1);
+  /* console defaults — the bright band redeclares these */
+  --fg:        rgba(255, 255, 255, 0.86);
+  --fg-strong: #ffffff;
+  --fg-dim:    rgba(255, 255, 255, 0.6);
+  --accent:    #ff5236;
+  --tech:      #ff9a4d;
+  --surface:   rgba(255, 255, 255, 0.05);
+  --line:      rgba(255, 255, 255, 0.18);
+  --line-soft: rgba(255, 255, 255, 0.1);
 
-  background: var(--bg);
+  background: var(--space);
   color: var(--fg);
   font-family: var(--font-body);
   font-weight: 400;
@@ -80,6 +80,19 @@ body {
   --surface:   rgba(255, 255, 255, 0.05);
   --line:      rgba(255, 255, 255, 0.18);
   --line-soft: rgba(255, 255, 255, 0.1);
+  color: var(--fg);
+}
+
+/* The one bright band flips back to ink-on-orange */
+.section-band {
+  --fg:        #291206;
+  --fg-strong: #180a02;
+  --fg-dim:    #4d2f17;
+  --accent:    var(--hal-deep);
+  --tech:      var(--ember-deep);
+  --surface:   rgba(255, 255, 255, 0.55);
+  --line:      rgba(58, 24, 6, 0.2);
+  --line-soft: rgba(58, 24, 6, 0.1);
   color: var(--fg);
 }
 
@@ -376,6 +389,88 @@ body.nav-open .nav-links a {
   padding: 0.85rem 0; /* 44px+ tap targets */
 }
 
+/* ---- Rail status readout (desktop side rail only) -------------------- */
+.rail-status {
+  display: none;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.rail-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ember);
+  box-shadow: 0 0 8px var(--ember-glow);
+  animation: led 2.2s ease-in-out infinite;
+}
+
+#rail-pct { color: var(--ember); }
+
+/* ---- Desktop: the nav becomes the console side rail ------------------ */
+@media (min-width: 1080px) {
+  body { padding-left: 13.5rem; }
+
+  #site-nav {
+    width: 13.5rem;
+    height: 100vh;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+    padding: 1.7rem 1.3rem 1.4rem;
+    background: linear-gradient(to bottom, rgba(12, 6, 4, 0.97), rgba(12, 6, 4, 0.92));
+    border-right: 1px solid rgba(255, 122, 51, 0.28);
+    border-bottom: none;
+  }
+
+  /* the rail never turns orange — it IS the dark console edge */
+  #site-nav.scrolled {
+    --nav-fg: rgba(255, 255, 255, 0.78);
+    --nav-rule: rgba(255, 255, 255, 0.35);
+    --nav-accent: #ff5f52;
+    background: linear-gradient(to bottom, rgba(12, 6, 4, 0.97), rgba(12, 6, 4, 0.92));
+    border-right-color: rgba(255, 122, 51, 0.45);
+    border-bottom-color: transparent;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    width: 100%;
+    counter-reset: phase;
+  }
+
+  .nav-links a {
+    counter-increment: phase;
+    font-size: 0.68rem;
+    padding: 0.42rem 0 0.42rem 0.85rem;
+    border-bottom: none;
+    border-left: 2px solid transparent;
+    transition: color 250ms ease, border-color 250ms ease, padding-left 250ms ease;
+  }
+
+  .nav-links a::before {
+    content: counter(phase, decimal-leading-zero) " ";
+    color: rgba(255, 154, 77, 0.55);
+    letter-spacing: 0.12em;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    border-left-color: var(--nav-accent);
+    border-bottom-color: transparent;
+    padding-left: 1.15rem;
+  }
+
+  .rail-status { display: flex; margin-top: auto; }
+}
+
 /* ---- Hero : deep space ---------------------------------------------------- */
 .hero {
   position: relative;
@@ -525,6 +620,26 @@ body.nav-open .nav-links a {
   pointer-events: none;
 }
 
+/* viewport frame ticks on the title screen */
+.hero-frame {
+  position: absolute;
+  inset: 1.4rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.frame-tick {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 0 solid var(--ember);
+  opacity: 0.85;
+}
+.frame-tick.tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+.frame-tick.tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
+.frame-tick.bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
+.frame-tick.br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+
 .hero-cta {
   margin-top: 2.6rem;
   display: flex;
@@ -573,10 +688,10 @@ body.nav-open .nav-links a {
   padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem);
 }
 
-.section-alt {
-  background-color: var(--bg-alt);
+.section-band {
+  background-color: var(--bg);
   /* faint mission-plan grid */
-  background-image: radial-gradient(rgba(58, 24, 6, 0.1) 1px, transparent 1.2px);
+  background-image: radial-gradient(rgba(58, 24, 6, 0.14) 1px, transparent 1.2px);
   background-size: 30px 30px;
 }
 
@@ -660,7 +775,7 @@ body.nav-open .nav-links a {
   margin-bottom: 1.4rem;
 }
 
-.about-text .lede em { color: var(--hal-deep); font-style: italic; }
+.about-text .lede em { color: var(--accent); font-style: italic; }
 
 .about-text p + p { margin-top: 1.1rem; }
 
@@ -736,19 +851,19 @@ body.nav-open .nav-links a {
   box-shadow: 0 26px 60px rgba(12, 5, 1, 0.45);
 }
 
-/* film sprocket holes top & bottom */
+/* HUD corner ticks — diagonal pair, console-panel style */
 .filmstrip::before,
 .filmstrip::after {
   content: "";
   position: absolute;
-  left: 0; right: 0;
+  width: 14px;
   height: 14px;
-  background-image: radial-gradient(circle at 10px 7px, rgba(242, 246, 252, 0.9) 3.5px, rgba(242, 246, 252, 0) 4.5px);
-  background-size: 26px 14px;
-  background-position: 6px center;
+  border: 0 solid var(--ember);
+  opacity: 0.85;
+  pointer-events: none;
 }
-.filmstrip::before { top: 4px; }
-.filmstrip::after { bottom: 4px; }
+.filmstrip::before { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+.filmstrip::after { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
 
 .filmstrip-label {
   font-family: var(--font-mono);
@@ -757,6 +872,20 @@ body.nav-open .nav-links a {
   text-transform: uppercase;
   color: var(--tech);
   margin-bottom: 1.2rem;
+}
+
+/* channel status LED */
+.filmstrip-label::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ember);
+  box-shadow: 0 0 8px var(--ember-glow);
+  margin-right: 0.7em;
+  vertical-align: 1px;
+  animation: led 2.2s ease-in-out infinite;
 }
 
 .project-head {
@@ -945,151 +1074,100 @@ body.nav-open .nav-links a {
   color: var(--fg-dim);
 }
 
-/* ---- The Features (publications) ------------------------------------------------- */
-.marquee {
-  background: var(--surface);
-  border: 1px solid rgba(214, 52, 12, 0.55);
-  padding: 2.2rem clamp(1.4rem, 4vw, 2.6rem);
-  text-align: center;
-  box-shadow: 0 0 40px rgba(214, 52, 12, 0.1), 0 18px 40px rgba(92, 47, 16, 0.09);
+/* ---- Transmission log (papers + notebook, folded) --------------------------- */
+.log-panel {
+  position: relative;
+  background: linear-gradient(160deg, #170c05 0%, #0a0503 100%);
+  border: 1px solid rgba(255, 122, 51, 0.28);
+  padding: clamp(1.2rem, 3vw, 2rem);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.5);
 }
 
-.marquee-lights {
+.log-head {
   display: flex;
-  justify-content: center;
-  gap: 1.4rem;
-  margin-bottom: 1.4rem;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--tech);
+  padding-bottom: 1.1rem;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(255, 122, 51, 0.22);
 }
 
-.marquee-lights span {
+.led {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(214, 52, 12, 0.35);
-  box-shadow: 0 0 6px rgba(214, 52, 12, 0.2);
+  background: #ff5236;
+  box-shadow: 0 0 10px rgba(255, 82, 54, 0.8);
+  animation: led 2.2s ease-in-out infinite;
 }
 
-.marquee-lights span:nth-child(odd) { animation: bulb 2.4s ease-in-out infinite; }
-.marquee-lights span:nth-child(even) { animation: bulb 2.4s ease-in-out 1.2s infinite; }
-
-@keyframes bulb {
-  0%, 100% { background: rgba(214, 52, 12, 0.35); box-shadow: 0 0 6px rgba(214, 52, 12, 0.2); }
-  50% { background: #e84318; box-shadow: 0 0 14px rgba(214, 52, 12, 0.75); }
+@keyframes led {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
-.marquee-title {
-  font-family: var(--font-title);
-  font-weight: 600;
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--hal-deep);
+.log-row {
+  display: grid;
+  grid-template-columns: 6rem 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.15rem 0.2rem;
+  border-bottom: 1px solid var(--line-soft);
 }
 
-.marquee-sub {
-  margin-top: 1rem;
-  max-width: 36rem;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--fg-dim);
-  font-style: italic;
-  font-weight: 300;
-}
+.log-row:last-of-type { border-bottom: none; padding-bottom: 0.2rem; }
 
-/* when real papers land, these rows appear under the marquee */
-.feature-credits {
-  list-style: none;
-  margin-top: 2rem;
-}
-
-.credit-row {
-  display: flex;
-  gap: 1.2rem;
-  align-items: baseline;
-  padding: 0.9rem 0.2rem;
-  border-bottom: 1px dashed var(--line);
-}
-
-.credit-row:last-child { border-bottom: none; }
-
-.credit-role {
+.log-type {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.25em;
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
   color: var(--tech);
-  white-space: nowrap;
+  padding-top: 0.3rem;
 }
 
-.credit-name { color: var(--fg); font-size: 1.08rem; }
-.credit-name em { color: var(--fg-dim); }
+.log-title {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-strong);
+  line-height: 1.4;
+}
 
-.credit-link {
+.log-title em { color: var(--fg-dim); font-style: italic; }
+
+.log-desc {
+  margin-top: 0.35rem;
+  font-size: 0.96rem;
+  color: var(--fg-dim);
+}
+
+.log-link {
   font-family: var(--font-mono);
   font-size: 0.66rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
 }
 
-.credit-link:hover { border-bottom-color: currentColor; }
+.log-link:hover { border-bottom-color: currentColor; }
 
-/* ---- The Serial (blog) ----------------------------------------------------------- */
-.serial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
-  gap: 1.4rem;
-}
-
-.serial-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-top: 3px solid rgba(22, 169, 232, 0.55);
-  padding: 1.5rem 1.4rem;
-  box-shadow: 0 1px 2px rgba(92, 47, 16, 0.06), 0 12px 28px rgba(92, 47, 16, 0.08);
-  transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
-}
-
-.serial-card:hover {
-  transform: translateY(-4px);
-  border-top-color: var(--hal);
-  box-shadow: 0 2px 4px rgba(92, 47, 16, 0.07), 0 22px 48px rgba(92, 47, 16, 0.15);
-}
-
-.serial-no {
+.log-status {
   font-family: var(--font-mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.3em;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--tech);
-}
-
-.serial-title {
-  margin-top: 0.7rem;
-  font-family: var(--font-title);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--fg-strong);
-  line-height: 1.45;
-}
-
-.serial-desc {
-  margin-top: 0.7rem;
-  font-size: 1rem;
-  color: var(--fg-dim);
-}
-
-.serial-meta {
-  display: inline-block;
-  margin-top: 1.1rem;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--tech);
-  border: 1px dashed rgba(58, 24, 6, 0.45);
-  padding: 0.3rem 0.7rem;
+  color: #ff5236;
+  border: 1px solid rgba(255, 82, 54, 0.45);
+  padding: 0.32rem 0.6rem;
+  white-space: nowrap;
 }
 
 .serial-note {
@@ -1118,7 +1196,7 @@ body.nav-open .nav-links a {
 .amp-sep {
   font-family: var(--font-body);
   font-style: italic;
-  color: var(--hal-deep);
+  color: var(--accent);
   margin: 0 0.6rem;
 }
 
@@ -1189,24 +1267,24 @@ body.nav-open .nav-links a {
    pointers only) — cards lean toward the cursor and catch a moving
    highlight, like light raking across a dossier photo. ------------------ */
 .craft,
-.serial-card,
+.log-row,
 .contact-card { position: relative; }
 
 .js .craft.tilt,
-.js .serial-card.tilt,
+.js .log-row.tilt,
 .js .contact-card.tilt {
   transform: perspective(950px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform 160ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .js .craft.tilt:hover,
-.js .serial-card.tilt:hover,
+.js .log-row.tilt:hover,
 .js .contact-card.tilt:hover {
   transform: perspective(950px) translateY(-5px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
 }
 
 .craft.tilt::after,
-.serial-card.tilt::after,
+.log-row.tilt::after,
 .contact-card.tilt::after {
   content: "";
   position: absolute;
@@ -1218,7 +1296,7 @@ body.nav-open .nav-links a {
 }
 
 .craft.tilt:hover::after,
-.serial-card.tilt:hover::after,
+.log-row.tilt:hover::after,
 .contact-card.tilt:hover::after { opacity: 1; }
 
 .credits {
@@ -1324,12 +1402,13 @@ body.nav-open .nav-links a {
 .delay-3 { transition-delay: 450ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, .flicker, .marquee-lights span, .ticker-track, .hero-met::before { animation: none; }
+  body::before, .flicker, .ticker-track, .hero-met::before,
+  .led, .rail-dot, .filmstrip-label::before { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .js .act-rule { transform: none; transition: none; }
-  .js .craft.tilt, .js .serial-card.tilt, .js .contact-card.tilt,
-  .js .craft.tilt:hover, .js .serial-card.tilt:hover, .js .contact-card.tilt:hover { transform: none; }
-  .craft.tilt::after, .serial-card.tilt::after, .contact-card.tilt::after { display: none; }
+  .js .craft.tilt, .js .log-row.tilt, .js .contact-card.tilt,
+  .js .craft.tilt:hover, .js .log-row.tilt:hover, .js .contact-card.tilt:hover { transform: none; }
+  .craft.tilt::after, .log-row.tilt::after, .contact-card.tilt::after { display: none; }
   .gita-sanskrit, .gita-translation, .gita-cite, .quote-mark { transition: none; }
   html { scroll-behavior: auto; }
   #boot-screen { display: none; }
@@ -1355,8 +1434,9 @@ body.nav-open .nav-links a {
   .act-no { font-size: 0.72rem; }
   .filmstrip-label, .tech-tags span, .project-meta { font-size: 0.72rem; }
   .contact-label { font-size: 0.68rem; }
-  .serial-no, .serial-meta, .credit-role, .credit-link { font-size: 0.7rem; }
-  .marquee-lights { gap: 1rem; }
+  .log-type, .log-status { font-size: 0.7rem; }
+  .log-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .log-status { justify-self: start; }
   .portrait-caption, .credits-line { font-size: 0.68rem; }
   .credits-line.dim { font-size: 0.64rem; }
   .edu-years { font-size: 0.7rem; }

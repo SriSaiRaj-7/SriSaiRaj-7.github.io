@@ -1,11 +1,13 @@
 # Sri Sai Raj — Portfolio
 
-A *2001: A Space Odyssey*-inspired portfolio site built on the film's
-poster palette: vermilion red-orange over poster-orange sections, warm-black
-starfields, the monolith, cream cards and telemetry-style mono labels —
-plus a pod-bay-door boot screen, a live mission clock, a scrolling
-telemetry ticker and a scroll progress bar. Built from a real
-researcher's resume.
+A *2001: A Space Odyssey*-inspired portfolio site structured as a
+Discovery-One mission console: warm-black grounds with poster-orange
+accents, a fixed side-rail phase navigation on desktop (a top bar
+below 1080px), HUD panels with ember telemetry, one bright
+poster-orange feature band for the work, and a folded transmission
+log for papers and notebook entries — plus a pod-bay-door boot
+screen, a live mission clock, a scrolling telemetry ticker and a
+scroll progress bar. Built from a real researcher's resume.
 
 **Live site (after enabling GitHub Pages):** https://srisairaj-7.github.io
 
@@ -16,9 +18,11 @@ Three files do all the work:
 
 ```
 index.html      all content and structure
-css/style.css   the 2001 look: poster red-orange, warm black, cream
+css/style.css   the console look: warm black, poster-orange band,
+                 side rail, HUD panels, ember telemetry
 js/main.js      boot screen, mission clock, parallax, reveals, title
-                 decode, marker drift, pointer tilt, nav
+                 decode, marker drift, pointer tilt, rail nav + scan
+                 readout
 ```
 
 ## Local preview

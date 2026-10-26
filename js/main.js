@@ -1,7 +1,7 @@
 /* ==========================================================================
-   SRI SAI RAJ — 2001: A SPACE ODYSSEY
-   Boot screen (pod bay doors), typewriter, scroll reveals, nav behavior,
-   title decode, marker drift, pointer tilt
+   SRI SAI RAJ — 2001: A SPACE ODYSSEY (Discovery-One console)
+   Boot screen (pod bay doors), typewriter, scroll reveals, rail nav,
+   title decode, marker drift, pointer tilt, scan readout
    ========================================================================== */
 
 (function () {
@@ -31,6 +31,7 @@
   var toggle = document.getElementById("nav-toggle");
   var veil = document.getElementById("nav-veil");
   var progress = document.getElementById("nav-progress");
+  var railPct = document.getElementById("rail-pct");
   var navLinks = Array.prototype.slice.call(document.querySelectorAll("#site-nav [data-nav]"));
   var sections = navLinks
     .map(function (a) { return document.querySelector(a.getAttribute("href")); })
@@ -65,7 +66,9 @@
 
     if (progress) {
       var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
-      progress.style.width = Math.min(100, Math.max(0, (window.scrollY / max) * 100)) + "%";
+      var pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      progress.style.width = pct + "%";
+      if (railPct) railPct.textContent = (pct < 10 ? "0" : "") + Math.round(pct);
     }
 
     driftMarkers();
@@ -192,7 +195,7 @@
   /* ---- Pointer tilt + sheen on the cards (fine pointers only) ----------- */
   if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
     Array.prototype.slice
-      .call(document.querySelectorAll(".craft, .serial-card, .contact-card"))
+      .call(document.querySelectorAll(".craft, .log-row, .contact-card"))
       .forEach(function (card) {
         card.classList.add("tilt");
         var raf = 0, rx = 0, ry = 0;
