@@ -283,13 +283,14 @@ body::before {
 }
 
 #site-nav.scrolled {
-  --nav-fg: #4a2410;
-  --nav-rule: rgba(58, 24, 6, 0.32);
-  --nav-accent: var(--hal-deep);
-  background: rgba(255, 241, 223, 0.94);
+  --nav-fg: #291206;              /* 7.3:1 on the orange below */
+  --nav-rule: rgba(58, 24, 6, 0.4);
+  --nav-accent: var(--hal-deep);  /* brick accent — 4.6:1 */
+  /* poster orange — no white bar, ever */
+  background: rgba(246, 138, 63, 0.97);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom-color: rgba(58, 24, 6, 0.12);
+  border-bottom-color: rgba(116, 24, 3, 0.4);
 }
 
 .nav-brand {
@@ -345,8 +346,16 @@ body::before {
 }
 
 body.nav-open #nav-veil { display: block; }
+/* open menu: the bar itself goes orange too, so the whole nav UI is one piece */
+body.nav-open #site-nav {
+  --nav-fg: #291206;
+  --nav-rule: rgba(58, 24, 6, 0.4);
+  --nav-accent: var(--hal-deep);
+  background: rgba(246, 138, 63, 0.97);
+  border-bottom-color: rgba(116, 24, 3, 0.4);
+}
 body.nav-open #site-nav .nav-links {
-  --nav-fg: #333d51;
+  --nav-fg: #291206;
   --nav-accent: var(--hal-deep);
 
   display: flex;
@@ -354,9 +363,9 @@ body.nav-open #site-nav .nav-links {
   position: fixed;
   top: 4rem; right: 1.2rem;
   z-index: 3001;
-  background: var(--panel);
-  border: 1px solid rgba(58, 24, 6, 0.16);
-  box-shadow: 0 24px 60px rgba(40, 14, 3, 0.3);
+  background: var(--bg);          /* orange panel — was cream */
+  border: 1px solid rgba(58, 24, 6, 0.35);
+  box-shadow: 0 24px 60px rgba(40, 14, 3, 0.45);
   padding: 1.4rem 2rem;
   gap: 0.2rem;
 }
@@ -595,6 +604,15 @@ body.nav-open .nav-links a {
   height: 1px;
   background: linear-gradient(to right, var(--line), transparent);
 }
+
+/* the rule draws itself in when the act enters view — gated on .js so a
+   no-JS visitor still sees the full line */
+.js .act-rule {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1000ms cubic-bezier(0.19, 1, 0.22, 1) 200ms;
+}
+.js .act-card.in-view .act-rule { transform: scaleX(1); }
 
 .act-name {
   font-family: var(--font-title);
@@ -1165,6 +1183,42 @@ body.nav-open .nav-links a {
 
 .btn-resume { display: inline-block; }
 
+/* ---- Pointer tilt + sheen (the .tilt class is added by JS, fine
+   pointers only) — cards lean toward the cursor and catch a moving
+   highlight, like light raking across a dossier photo. ------------------ */
+.craft,
+.serial-card,
+.contact-card { position: relative; }
+
+.js .craft.tilt,
+.js .serial-card.tilt,
+.js .contact-card.tilt {
+  transform: perspective(950px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 160ms ease, border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.js .craft.tilt:hover,
+.js .serial-card.tilt:hover,
+.js .contact-card.tilt:hover {
+  transform: perspective(950px) translateY(-5px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+.craft.tilt::after,
+.serial-card.tilt::after,
+.contact-card.tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--sx, 50%) var(--sy, 50%), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 62%);
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+
+.craft.tilt:hover::after,
+.serial-card.tilt:hover::after,
+.contact-card.tilt:hover::after { opacity: 1; }
+
 .credits {
   margin-top: 3.5rem;
   text-align: center;
@@ -1270,6 +1324,10 @@ body.nav-open .nav-links a {
 @media (prefers-reduced-motion: reduce) {
   body::before, .flicker, .marquee-lights span, .ticker-track, .hero-met::before { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
+  .js .act-rule { transform: none; transition: none; }
+  .js .craft.tilt, .js .serial-card.tilt, .js .contact-card.tilt,
+  .js .craft.tilt:hover, .js .serial-card.tilt:hover, .js .contact-card.tilt:hover { transform: none; }
+  .craft.tilt::after, .serial-card.tilt::after, .contact-card.tilt::after { display: none; }
   .gita-sanskrit, .gita-translation, .gita-cite, .quote-mark { transition: none; }
   html { scroll-behavior: auto; }
   #boot-screen { display: none; }

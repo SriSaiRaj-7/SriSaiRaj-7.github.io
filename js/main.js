@@ -1,6 +1,7 @@
 /* ==========================================================================
    SRI SAI RAJ — 2001: A SPACE ODYSSEY
-   Boot screen (pod bay doors), typewriter, scroll reveals, nav behavior
+   Boot screen (pod bay doors), typewriter, scroll reveals, nav behavior,
+   title decode, marker drift, pointer tilt
    ========================================================================== */
 
 (function () {
@@ -35,6 +36,20 @@
     .map(function (a) { return document.querySelector(a.getAttribute("href")); })
     .filter(Boolean);
 
+  /* ---- Act markers drift horizontally as they pass — a little depth ----- */
+  var actMarkers = Array.prototype.slice.call(document.querySelectorAll(".act-marker"));
+
+  function driftMarkers() {
+    if (reduceMotion || !actMarkers.length) return;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    actMarkers.forEach(function (m) {
+      var r = m.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) return;   /* offscreen: skip */
+      var p = (r.top + r.height / 2 - vh / 2) / vh;    /* ≈ -0.5 … 0.5 */
+      m.style.transform = "translateX(" + (p * -14).toFixed(1) + "px)";
+    });
+  }
+
   function onScroll() {
     if (!nav) return;
     nav.classList.toggle("scrolled", window.scrollY > 40);
@@ -52,6 +67,8 @@
       var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
       progress.style.width = Math.min(100, Math.max(0, (window.scrollY / max) * 100)) + "%";
     }
+
+    driftMarkers();
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -78,6 +95,34 @@
   /* ---- Reveal on scroll (sweep-based, robust to fast jumps) -------------- */
   var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
 
+  /* ---- Act cards: the rule draws in, titles decode like teletype -------- */
+  var actCards = Array.prototype.slice.call(document.querySelectorAll(".act-card"));
+  var DECODE_CHARS = "ABCDEF0123456789/\\|<>+=*·";
+
+  function decodeTitle(el) {
+    if (el.getAttribute("data-decoded")) return;
+    el.setAttribute("data-decoded", "1");
+    var final = el.textContent;
+    if (reduceMotion || !final) return;
+    /* keep the accessible name stable while the glyphs tumble */
+    el.setAttribute("aria-label", final);
+    var steps = Math.min(Math.max(final.length, 6), 24);
+    var i = 0;
+    (function step() {
+      i += 1;
+      var locked = Math.ceil((final.length * i) / steps);
+      var out = "";
+      for (var c = 0; c < final.length; c++) {
+        var ch = final.charAt(c);
+        if (c < locked || ch === " " || ch === "," || ch === "-") out += ch;
+        else out += DECODE_CHARS.charAt(Math.floor(Math.random() * DECODE_CHARS.length));
+      }
+      el.textContent = out;
+      if (i < steps) setTimeout(step, 30);
+      else el.textContent = final;
+    })();
+  }
+
   function sweepReveals() {
     var vh = window.innerHeight || document.documentElement.clientHeight;
     revealEls.forEach(function (el) {
@@ -85,6 +130,16 @@
       var r = el.getBoundingClientRect();
       if (r.top < vh - 30 || r.bottom < vh) {
         el.classList.add("visible");
+      }
+    });
+
+    actCards.forEach(function (card) {
+      if (card.classList.contains("in-view")) return;
+      var r = card.getBoundingClientRect();
+      if (r.top < vh - 60 || r.bottom < vh) {
+        card.classList.add("in-view");
+        var title = card.querySelector(".section-title");
+        if (title) decodeTitle(title);
       }
     });
   }
@@ -132,6 +187,35 @@
 
   if (!typeTargets.length || reduceMotion) {
     typeTargets.forEach(function (el) { el.textContent = el.getAttribute("data-typewriter") || el.textContent; });
+  }
+
+  /* ---- Pointer tilt + sheen on the cards (fine pointers only) ----------- */
+  if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+    Array.prototype.slice
+      .call(document.querySelectorAll(".craft, .serial-card, .contact-card"))
+      .forEach(function (card) {
+        card.classList.add("tilt");
+        var raf = 0, rx = 0, ry = 0;
+        var apply = function () {
+          raf = 0;
+          card.style.setProperty("--rx", rx.toFixed(2) + "deg");
+          card.style.setProperty("--ry", ry.toFixed(2) + "deg");
+        };
+        card.addEventListener("mousemove", function (e) {
+          var b = card.getBoundingClientRect();
+          var nx = (e.clientX - b.left) / b.width - 0.5;
+          var ny = (e.clientY - b.top) / b.height - 0.5;
+          ry = nx * 10;                    /* rotateY: lean left / right */
+          rx = ny * -8;                    /* rotateX: tip toward cursor */
+          card.style.setProperty("--sx", ((nx + 0.5) * 100).toFixed(1) + "%");
+          card.style.setProperty("--sy", ((ny + 0.5) * 100).toFixed(1) + "%");
+          if (!raf) raf = requestAnimationFrame(apply);
+        });
+        card.addEventListener("mouseleave", function () {
+          rx = 0; ry = 0;
+          if (!raf) raf = requestAnimationFrame(apply);
+        });
+      });
   }
 
   /* ---- Subtle parallax on hero --------------------------------------------- */
@@ -188,7 +272,8 @@
     onScroll();
     sweepReveals();
     pumpTypewriters();
-    var allRevealed = revealEls.every(function (el) { return el.classList.contains("visible"); });
+    var allRevealed = revealEls.every(function (el) { return el.classList.contains("visible"); }) &&
+      actCards.every(function (c) { return c.classList.contains("in-view"); });
     if (allRevealed && typeQueue.length === 0) clearInterval(ticker);
   }, 300);
 })();

@@ -17,7 +17,8 @@ Three files do all the work:
 ```
 index.html      all content and structure
 css/style.css   the 2001 look: poster red-orange, warm black, cream
-js/main.js      boot screen, mission clock, parallax, reveals, nav
+js/main.js      boot screen, mission clock, parallax, reveals, title
+                 decode, marker drift, pointer tilt, nav
 ```
 
 ## Local preview
