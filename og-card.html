@@ -8,15 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --space: #060a12;
-    --hal: #e5322d;
-    --cyan: #4ec9f5;
+    --space: #0a0503;
+    --hal: #d6340c;
+    --ember: #ff7a33;
     --stars:
       radial-gradient(2.2px 2.2px at 24% 32%, rgba(255,255,255,0.95), rgba(255,255,255,0) 70%),
       radial-gradient(1.5px 1.5px at 12% 86%, rgba(255,255,255,0.6), rgba(255,255,255,0) 70%),
       radial-gradient(1.6px 1.6px at 68% 14%, rgba(255,255,255,0.75), rgba(255,255,255,0) 70%),
       radial-gradient(1.9px 1.9px at 46% 78%, rgba(255,255,255,0.7), rgba(255,255,255,0) 70%),
-      radial-gradient(1.6px 1.6px at 82% 62%, rgba(190,225,255,0.85), rgba(190,225,255,0) 70%);
+      radial-gradient(1.6px 1.6px at 82% 62%, rgba(255,198,150,0.85), rgba(255,198,150,0) 70%);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
@@ -25,8 +25,8 @@
     background-image:
       radial-gradient(ellipse 130% 110% at 50% 45%, transparent 52%, rgba(0,0,0,0.55) 100%),
       var(--stars),
-      radial-gradient(ellipse 110% 80% at 50% -5%, rgba(34, 62, 120, 0.5), transparent 62%),
-      linear-gradient(180deg, #070c16 0%, #0a101d 55%, #060a12 100%);
+      radial-gradient(ellipse 110% 80% at 50% -5%, rgba(140, 45, 12, 0.5), transparent 62%),
+      linear-gradient(180deg, #0c0605 0%, #130906 55%, #0a0503 100%);
     background-size: auto, 461px 421px, 629px 560px, 787px 731px, 551px 497px, auto, auto;
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   /* HUD frame with corner ticks */
-  .frame { position: absolute; inset: 34px; border: 1px solid rgba(78,201,245,0.28); pointer-events: none; }
+  .frame { position: absolute; inset: 34px; border: 1px solid rgba(255,122,51,0.3); pointer-events: none; }
   .tick { position: absolute; width: 26px; height: 26px; border: 0 solid var(--hal); }
   .tick.tl { top: 34px; left: 34px; border-top-width: 3px; border-left-width: 3px; }
   .tick.tr { top: 34px; right: 34px; border-top-width: 3px; border-right-width: 3px; }
@@ -56,7 +56,7 @@
     background: linear-gradient(155deg, #0d1424 0%, #010203 42%, #05070d 100%);
     box-shadow:
       inset 2px 0 0 rgba(255,255,255,0.26),
-      0 0 110px rgba(78,201,245,0.2),
+      0 0 110px rgba(255,122,51,0.22),
       0 0 40px rgba(0,0,0,0.9);
   }
   .card { position: relative; text-align: center; z-index: 2; margin-top: -20px; }
@@ -65,7 +65,7 @@
     font-size: 17px;
     letter-spacing: 0.55em;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--ember);
     margin-bottom: 30px;
     text-indent: 0.55em;
   }
@@ -75,7 +75,7 @@
     letter-spacing: 0.13em;
     color: #ffffff;
     line-height: 1;
-    text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 0 80px rgba(78,201,245,0.35);
+    text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 0 80px rgba(255,122,51,0.35);
     text-indent: 0.13em;
   }
   .sub {
@@ -106,7 +106,7 @@
     font-family: "IBM Plex Mono", monospace;
     font-size: 16px;
     letter-spacing: 0.18em;
-    color: var(--cyan);
+    color: var(--ember);
   }
 </style>
 </head>
@@ -118,7 +118,7 @@
   <div class="tick br"></div>
   <div class="monolith"></div>
   <div class="card">
-    <div class="eyebrow">A Mission in Nine Acts</div>
+    <div class="eyebrow">PERSONNEL FILE · MISSION OPERATIONS</div>
     <div class="title">SRI&nbsp;SAI&nbsp;RAJ</div>
     <div class="sub">Aspiring Quantum Computer Scientist <span class="sep">|</span> DSA &amp; ML</div>
     <div class="divider"></div>
