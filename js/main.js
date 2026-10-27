@@ -1,7 +1,7 @@
 /* ==========================================================================
    SRI SAI RAJ — 2001: A SPACE ODYSSEY (Discovery-One console)
    Boot screen (pod bay doors), typewriter, scroll reveals, rail nav,
-   title decode, marker drift, pointer tilt, scan readout
+   title focus-in, marker drift, pointer tilt, scan readout
    ========================================================================== */
 
 (function () {
@@ -98,32 +98,36 @@
   /* ---- Reveal on scroll (sweep-based, robust to fast jumps) -------------- */
   var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
 
-  /* ---- Act cards: the rule draws in, titles decode like teletype -------- */
+  /* ---- Act cards: the rule draws in, titles pull into focus ------------- */
   var actCards = Array.prototype.slice.call(document.querySelectorAll(".act-card"));
-  var DECODE_CHARS = "ABCDEF0123456789/\\|<>+=*·";
 
-  function decodeTitle(el) {
-    if (el.getAttribute("data-decoded")) return;
-    el.setAttribute("data-decoded", "1");
-    var final = el.textContent;
-    if (reduceMotion || !final) return;
-    /* keep the accessible name stable while the glyphs tumble */
-    el.setAttribute("aria-label", final);
-    var steps = Math.min(Math.max(final.length, 6), 24);
-    var i = 0;
-    (function step() {
-      i += 1;
-      var locked = Math.ceil((final.length * i) / steps);
-      var out = "";
-      for (var c = 0; c < final.length; c++) {
-        var ch = final.charAt(c);
-        if (c < locked || ch === " " || ch === "," || ch === "-") out += ch;
-        else out += DECODE_CHARS.charAt(Math.floor(Math.random() * DECODE_CHARS.length));
-      }
-      el.textContent = out;
-      if (i < steps) setTimeout(step, 30);
-      else el.textContent = final;
-    })();
+  /* Split each section title into word spans, held blurred until the card
+     enters view — a lens finding its subject, staggered word by word.
+     The real text is in the DOM the whole time (stable for screen readers
+     and for no-JS), it just starts out of focus. */
+  function splitTitle(el) {
+    if (el.getAttribute("data-split")) return;
+    el.setAttribute("data-split", "1");
+    var words = el.textContent.split(/\s+/).filter(Boolean);
+    el.textContent = "";
+    words.forEach(function (word, i) {
+      var span = document.createElement("span");
+      span.className = "w";
+      span.style.setProperty("--wi", i);
+      span.textContent = word;
+      el.appendChild(span);
+      if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
+    });
+  }
+
+  if (!reduceMotion) {
+    actCards.forEach(function (card) {
+      var title = card.querySelector(".section-title");
+      if (title) splitTitle(title);
+    });
+    /* flush styles so the focus transition always has a painted start state,
+       even for a card that is already in view on load */
+    if (actCards.length) void document.body.offsetHeight;
   }
 
   function sweepReveals() {
@@ -137,12 +141,13 @@
     });
 
     actCards.forEach(function (card) {
-      if (card.classList.contains("in-view")) return;
       var r = card.getBoundingClientRect();
-      if (r.top < vh - 60 || r.bottom < vh) {
+      if (card.classList.contains("in-view")) {
+        /* Fully off-screen (past a 60px margin): reset, so the focus-in
+           and the rule draw replay the next time the section is scrolled to. */
+        if (r.bottom < -60 || r.top > vh + 60) card.classList.remove("in-view");
+      } else if (r.top < vh - 60 && r.bottom > 60) {
         card.classList.add("in-view");
-        var title = card.querySelector(".section-title");
-        if (title) decodeTitle(title);
       }
     });
   }

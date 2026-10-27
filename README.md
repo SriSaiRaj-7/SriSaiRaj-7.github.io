@@ -21,7 +21,7 @@ index.html      all content and structure
 css/style.css   the console look: warm black, poster-orange band,
                  side rail, HUD panels, ember telemetry
 js/main.js      boot screen, mission clock, parallax, reveals, title
-                 decode, marker drift, pointer tilt, rail nav + scan
+                 title focus-in, marker drift, pointer tilt, rail nav + scan
                  readout
 ```
 
